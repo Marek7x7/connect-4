@@ -13,16 +13,21 @@ void printBoard(const char board[ROW][COL]) {
     for (int c = 0; c < COL; ++c) {
       std::cout << " " << board[r][c] << " " << DEVIDER;
     }
+    
     std::cout << "\n";
   }
+  for (int i = 0; i < COL; ++i) {
+    std::cout << DEVIDER << EMPTY_SPACE << i + 1 << EMPTY_SPACE;
+  }
+  std::cout << DEVIDER << "\n";
 }
 
 int main() {
   char board[ROW][COL];
   std::fill(&board[0][0], &board[0][0] + ROW * COL, EMPTY_SPACE);
 
-  board[0][0] = 'X';
-  board[3][4] = 'O';
+  
+
 
   printBoard(board);
 
