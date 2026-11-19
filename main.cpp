@@ -48,6 +48,25 @@ public:
       return false;
   }
 
+  bool hasWon(Cell player) const {
+    constexpr int dirs[4][2] = {{0, 1}, {1, 0}, {1, 1}, {1, -1}};
+    for (int r = 0; r < ROWS; ++r) {
+      for (int c = 0; c < COLS; ++c) {
+        if (at(r, c) != player) { continue; }
+        for (const auto& d : dirs) {
+          int k = 1;
+          for (; k < 4; ++k) {
+            int rr = r + d[0] * k;
+            int cc = c + d[1] * k;
+            if (rr < 0 || rr >= ROWS || cc < 0 || cc >= COLS || at(rr, cc) != player) { break; }
+          }
+          if (k == 4) { return true; }
+        }
+      }
+    }
+    return false;
+  }
+
 private:
   std::array<Cell, ROWS * COLS> cells_;
 };
@@ -79,6 +98,10 @@ int main() {
 
         ++moves;
         board.print();
+        if (board.hasWon(current)) {
+          std::cout << (current == Cell::Red ? "Red" : "Yellow") << " wins!\n";
+          return 0;
+        }
         current = (current == Cell::Red) ? Cell::Yellow : Cell::Red;
     }
 
